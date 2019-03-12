@@ -1,14 +1,10 @@
-FROM ubuntu:14.04
-MAINTAINER Sharoon Thomas <sharoon.thomas@openlabs.co.in>
-
-RUN sed 's/main$/main universe/' -i /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get upgrade -y
+FROM python:3.6-slim-stretch
+MAINTAINER Dorel Vaida <dorel.vaida@gmail.com>
 
 # Download and install wkhtmltopdf
-RUN apt-get install -y build-essential xorg libssl-dev libxrender-dev wget gdebi
-RUN wget http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
-RUN gdebi --n wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
+RUN apt-get update && apt-get install -y wget xfonts-base xfonts-75dpi libxrender1 libxext6 libxcb1 libx11-6 libjpeg62-turbo fontconfig
+RUN wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb
+RUN dpkg -i wkhtmltox_0.12.5-1.stretch_amd64.deb
 ENTRYPOINT ["wkhtmltopdf"]
 
 # Show the extended help
